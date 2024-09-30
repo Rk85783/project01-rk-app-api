@@ -28,7 +28,7 @@ class Utils {
 
     return {
       access: aToken,
-      access_expire_time: aDecoded.exp,
+      accessExpireTime: aDecoded.exp,
       refresh: rToken
     };
   };

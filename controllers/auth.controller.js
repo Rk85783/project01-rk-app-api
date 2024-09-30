@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "../db/models/user.js";
 import Utils from "../utils/common.util.js";
+import { errorMessages } from "../utils/error.messages.js";
 
 export const register = async (req, res) => {
   try {
@@ -32,7 +33,7 @@ export const register = async (req, res) => {
     console.error("register(): catch error: ", error);
     return res.status(500).json({
       success: false,
-      message: error.message || "Internal Server Error"
+      message: error.message || errorMessages.INTERNAL_SERVER_ERROR
     });
   }
 };
@@ -54,11 +55,11 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         success: false,
-        message: "User not found"
+        message: errorMessages.USER_NOT_FOUND
       });
     }
 
-    const isMatch = await bcrypt.compareSync(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({
         success: false,
@@ -75,17 +76,16 @@ export const login = async (req, res) => {
         email: user.email,
         role: user.role,
         access: authToken.access,
-        expiresAt: authToken.access_expire_time,
+        expiresAt: authToken.accessExpireTime,
         refresh: authToken.refresh,
-        emailVerified: user.email_verified
-        // phoneVerified: user.phone_verified
+        emailVerified: user.emailVerified
       }
     });
   } catch (error) {
     console.error("register(): catch error: ", error);
     return res.status(500).json({
       success: false,
-      message: error.message || "Internal Server Error"
+      message: error.message || errorMessages.INTERNAL_SERVER_ERROR
     });
   }
 };
