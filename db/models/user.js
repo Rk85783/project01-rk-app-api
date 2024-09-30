@@ -2,52 +2,62 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const RoleEnum = {
-  values: ['SUPER_ADMIN', 'ADMIN', 'USER'],
-  message: 'enum validator failed for path `{PATH}` with value `{VALUE}`'
-}
+  values: ["SUPER_ADMIN", "ADMIN", "USER"],
+  message: "enum validator failed for path `{PATH}` with value `{VALUE}`"
+};
 
 const StatusEnum = {
-  values: ['ACTIVE', 'IN_ACTIVE'],
-  message: 'enum validator failed for path `{PATH}` with value `{VALUE}`'
-}
+  values: ["ACTIVE", "IN_ACTIVE"],
+  message: "enum validator failed for path `{PATH}` with value `{VALUE}`"
+};
 
 const UserSchema = new Schema({
-  first_name: {
+  firstName: {
     type: String,
-    required: true
+    required: [true, "First name is required"],
+    trim: true,
+    minlength: [2, "First name must be at least 2 characters long"]
   },
-  last_name: {
+  lastName: {
     type: String,
-    required: true
+    required: [true, "Last name is required"],
+    trim: true,
+    minlength: [2, "Last name must be at least 2 characters long"]
   },
   email: {
     type: String,
-    required: true,
-    unique: true
+    required: [true, "Email is required"],
+    unique: true,
+    lowercase: true,
+    trim: true,
+    match: [/.+@.+\..+/, "Please enter a valid email address"]
   },
   password: {
     type: String,
-    required: true
+    required: [true, "Password is required"],
+    minlength: [6, "Password must be at least 6 characters long"]
   },
   role: {
     type: String,
     enum: RoleEnum,
-    default: 'USER'
+    default: "USER"
   },
-  email_otp: {
-    type: Number
+  emailOtp: {
+    type: Number,
+    min: [100000, "OTP should be at least 6 digits"],
+    max: [999999, "OTP should not exceed 6 digits"]
   },
-  email_verified: {
+  emailVerified: {
     type: Boolean,
     default: false
   },
   status: {
     type: String,
     enum: StatusEnum,
-    default: 'ACTIVE'
-  },
+    default: "ACTIVE"
+  }
 }, {
   timestamps: true
 });
 
-export const UserModel = mongoose.model('users', UserSchema);
+export const UserModel = mongoose.model("User", UserSchema);

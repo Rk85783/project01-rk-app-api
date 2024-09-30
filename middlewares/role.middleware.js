@@ -1,4 +1,4 @@
-import { errorMessages } from "../utils/error.messages.js"
+import { errorMessages } from "../utils/error.messages.js";
 
 /**
  * This method will validate token role for given grant roles.
@@ -8,20 +8,20 @@ import { errorMessages } from "../utils/error.messages.js"
 export const hasRole = (grantRoles) => {
   return function (req, res, next) {
     if (req.user) {
-      const role = req.user.role
+      const role = req.user.role;
       if (role && grantRoles.includes(role)) {
-        next()
+        next();
       } else {
         return res.status(403).json({
           success: false,
           message: errorMessages.NOT_AUTHORIZED
-        })
+        });
       }
     } else {
       return res.status(401).json({
         success: false,
         message: errorMessages.AUTH_TOKEN_IS_NOT_VALID
-      })
+      });
     }
-  }
-}
+  };
+};

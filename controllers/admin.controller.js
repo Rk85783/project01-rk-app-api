@@ -5,4 +5,4 @@ export const adminProfile = async (req, res) => {
   console.log(xyz);
   console.log(req.user);
   res.send("admin profile");
-}
+};
