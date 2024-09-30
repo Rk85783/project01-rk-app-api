@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { UserModel } from "../db/models/user.js";
 import Utils from "../utils/common.util.js";
 import { errorMessages } from "../utils/error.messages.js";
+import { sendMail } from "../services/email.service.js";
 
 export const register = async (req, res) => {
   try {
@@ -24,6 +25,13 @@ export const register = async (req, res) => {
     });
 
     if (createdUser) {
+      const mailData = {
+        to: createdUser.email,
+        subject: "Welcome to Rk-App!",
+        values: createdUser
+      };
+      await sendMail(mailData, "welcome.ejs");
+
       return res.status(200).json({
         success: true,
         message: "User registered successfully"

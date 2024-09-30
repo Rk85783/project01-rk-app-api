@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { login, register } from "../controllers/auth.controller.js";
-import { adminProfile } from "../controllers/admin.controller.js";
+// import { adminProfile } from "../controllers/admin.controller.js";
 import { userProfile } from "../controllers/user.controller.js";
 import { authorizedToken } from "../middlewares/auth.middleware.js";
 import { hasRole } from "../middlewares/role.middleware.js";
