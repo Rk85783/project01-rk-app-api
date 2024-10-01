@@ -1,6 +1,6 @@
 {
-  "name": "01-project",
-  "version": "2.0.0",
+  "name": "project01-rk-app-api",
+  "version": "3.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {

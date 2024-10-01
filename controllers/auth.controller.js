@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { UserModel } from "../db/models/user.js";
-import Utils from "../utils/common.util.js";
+import Utils from "../utils/common.js";
 import { errorMessages } from "../utils/error.messages.js";
 import { sendMail } from "../services/email.service.js";
 
